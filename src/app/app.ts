@@ -1,12 +1,14 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { ProdutoListComponent } from './components/produto-list/produto-list';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  // Remova o RouterOutlet daqui para sumir o Warning do terminal
+  imports: [ProdutoListComponent],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('loja-front');
+  title = 'loja-front';
 }

@@ -1,0 +1,18 @@
+<table border="1" style="width: 80%; margin: auto;">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nome</th>
+      <th>Preço</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of produtos">
+      <td>{{ p.id }}</td>
+      <td>{{ p.nome }}</td>
+      <td>{{ p.preco | currency:'BRL' }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="produtos.length === 0">Nenhum produto encontrado no banco Java.</p>
