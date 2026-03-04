@@ -12,7 +12,7 @@ export class LoginComponent {
   constructor(private router: Router) {} // Injeta o serviço de rotas
 
   logar(user: string, pass: string) {
-    if (user === 'admin' && pass === '123') {
+    if (user === 'adm' && pass === '123') {
       this.router.navigate(['/produtos']); // Vai para a tabela se os dados baterem
     } else {
       alert('Usuário ou senha incorretos!');
