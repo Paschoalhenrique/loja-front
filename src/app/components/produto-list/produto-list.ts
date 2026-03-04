@@ -11,13 +11,9 @@ import { ProdutoService } from '../../services/produto.service';
   styleUrl: './produto-list.css'
 })
 export class ProdutoListComponent implements OnInit {
-
   produtos: any[] = [];
 
-  constructor(
-    private service: ProdutoService,
-    private router: Router
-  ) {}
+  constructor(private service: ProdutoService, private router: Router) {}
 
   ngOnInit(): void {
     this.carregarProdutos();
@@ -25,17 +21,28 @@ export class ProdutoListComponent implements OnInit {
 
   carregarProdutos(): void {
     this.service.listar().subscribe({
-      next: (res: any[]) => {
-        this.produtos = res;
-      },
-      error: (err: any) => {
-        console.error('Erro ao chamar a API do Java:', err);
-      }
+      next: (res: any[]) => { this.produtos = res; },
+      error: (err: any) => { console.error('Erro ao listar:', err); }
     });
   }
 
+  deletar(id: number): void {
+    if (confirm('Deseja realmente excluir este produto?')) {
+      // Agora o excluir(id) retorna um Observable, permitindo o subscribe
+      this.service.excluir(id).subscribe({
+        next: () => {
+          alert('Excluído com sucesso!');
+          this.carregarProdutos(); // Atualiza a lista na tela
+        },
+        error: (err: any) => {
+          console.error('Erro ao deletar:', err);
+          alert('Erro ao excluir produto.');
+        }
+      });
+    }
+  }
+
   irParaCadastro(): void {
-    // Removido o 'throw new Error' para permitir a navegação
     this.router.navigate(['/produtos/novo']);
   }
 
