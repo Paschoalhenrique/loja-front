@@ -1,0 +1,21 @@
+.btn-sair {
+  position: fixed;      /* Fixa o botão na tela */
+  bottom: 20px;         /* Distância do fundo */
+  right: 20px;          /* Distância da direita */
+  padding: 10px 20px;
+  background-color: #dc3545; /* Vermelho discreto */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra para dar profundidade */
+  z-index: 1000;        /* Garante que fique acima de outros elementos */
+  opacity: 0.8;         /* Deixa levemente transparente para ser discreto */
+  transition: opacity 0.3s;
+}
+
+.btn-sair:hover {
+  opacity: 1;           /* Fica nítido quando passa o mouse */
+  background-color: #c82333;
+}
