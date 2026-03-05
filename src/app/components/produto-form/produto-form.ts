@@ -1,49 +1,82 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule, Location } from '@angular/common'; // Importado Location para navegação simples
+import { FormsModule } from '@angular/forms'; // OBRIGATÓRIO para o [(ngModel)]
+import { Router, ActivatedRoute } from '@angular/router';
 import { ProdutoService } from '../../services/produto.service';
 
 @Component({
   selector: 'app-produto-form',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule], // Adicionado FormsModule aqui
   templateUrl: './produto-form.html',
   styleUrl: './produto-form.css'
 })
-export class ProdutoFormComponent {
+export class ProdutoFormComponent implements OnInit {
+
+  // Objeto que armazena os dados do formulário
+  produto: any = {
+    nome: '',
+    preco: null,
+    descricao: ''
+  };
+
+  idEdicao: number | null = null;
 
   constructor(
     private service: ProdutoService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute // Para ler o ID da URL
   ) {}
 
-  // Função para salvar o produto no banco via Spring Boot
-  salvar(nome: string, preco: string, descricao: string): void {
-    // Criamos o objeto no formato que o seu Java espera
-    const novoProduto = {
-      nome: nome,
-      preco: parseFloat(preco), // Converte o texto para número
-      descricao: descricao
-    };
-
-    if (nome && preco) {
-      this.service.salvar(novoProduto).subscribe({
-        next: (res) => {
-          console.log('Produto salvo com sucesso!', res);
-          alert('Produto cadastrado!');
-          this.voltar(); // Volta para a lista após salvar
-        },
-        error: (err) => {
-          console.error('Erro ao salvar produto:', err);
-          alert('Erro ao conectar com o servidor.');
-        }
-      });
-    } else {
-      alert('Por favor, preencha o nome e o preço.');
+  ngOnInit(): void {
+    // Verifica se existe um parâmetro 'id' na URL (ex: /produtos/editar/2)
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.idEdicao = +id;
+      this.carregarProdutoParaEdicao(this.idEdicao);
     }
   }
 
-  // Função para o botão voltar
+  carregarProdutoParaEdicao(id: number): void {
+    this.service.buscarPorId(id).subscribe({
+      next: (res) => {
+        this.produto = res; // Preenche o formulário com os dados vindos do Java
+      },
+      error: (err) => {
+        console.error('Erro ao carregar produto:', err);
+        alert('Não foi possível carregar os dados do produto.');
+      }
+    });
+  }
+
+  // Função unificada para Salvar ou Atualizar
+  submit(): void {
+    if (!this.produto.nome || !this.produto.preco) {
+      alert('Por favor, preencha o nome e o preço.');
+      return;
+    }
+
+    if (this.idEdicao) {
+      // Se estamos editando, chama o PUT do Back-end
+      this.service.atualizar(this.idEdicao, this.produto).subscribe({
+        next: () => {
+          alert('Produto atualizado com sucesso!');
+          this.voltar();
+        },
+        error: (err) => console.error('Erro ao atualizar:', err)
+      });
+    } else {
+      // Se é novo, chama o POST
+      this.service.salvar(this.produto).subscribe({
+        next: () => {
+          alert('Produto cadastrado com sucesso!');
+          this.voltar();
+        },
+        error: (err) => console.error('Erro ao salvar:', err)
+      });
+    }
+  }
+
   voltar(): void {
     this.router.navigate(['/produtos']);
   }

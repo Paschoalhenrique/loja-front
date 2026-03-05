@@ -7,5 +7,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'produtos', component: ProdutoListComponent },
   { path: 'produtos/novo', component: ProdutoFormComponent }, // Rota de Cadastro
+  { path: 'produtos/editar/:id', component: ProdutoFormComponent }, // NOVA: Rota de Edição com parâmetro ID
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];

@@ -1,21 +1,120 @@
-.btn-sair {
-  position: fixed;      /* Fixa o botão na tela */
-  bottom: 20px;         /* Distância do fundo */
-  right: 20px;          /* Distância da direita */
-  padding: 10px 20px;
-  background-color: #dc3545; /* Vermelho discreto */
+/* Container principal para o padding */
+.container-principal {
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+/* Centralização do título */
+.header-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Divisor horizontal */
+.divisor {
+  margin-bottom: 20px;
+}
+
+/* Alinhamento do botão 'Novo Produto' */
+.novoproduto-section {
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
+  margin: 0 auto 15px auto;
+}
+
+/* Estilo para o botão 'Novo Produto' (Verde) */
+.btn-novo-produto {
+  background-color: #28a745;
   color: white;
   border: none;
+  padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sombra para dar profundidade */
-  z-index: 1000;        /* Garante que fique acima de outros elementos */
-  opacity: 0.8;         /* Deixa levemente transparente para ser discreto */
-  transition: opacity 0.3s;
 }
 
-.btn-sair:hover {
-  opacity: 1;           /* Fica nítido quando passa o mouse */
-  background-color: #c82333;
+/* ====== ESTILO DA TABELA ZEBRADA ====== */
+.tabela-produtos {
+  width: 80%;
+  margin: auto;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+}
+
+/* Estilo do cabeçalho da tabela (Cinza Claro) */
+.tabela-produtos thead tr {
+  background-color: #f2f2f2;
+}
+
+.tabela-produtos th,
+.tabela-produtos td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Centralização de IDs e alinhamento de preços */
+.id-cell {
+  text-align: center;
+}
+
+.preco-cell {
+  text-align: right;
+}
+
+/* Centralização da coluna de ações e tamanho fixo */
+.coluna-acoes {
+  width: 150px;
+  text-align: center;
+}
+
+.acoes-cell {
+  text-align: center;
+  display: flex;
+  gap: 5px; /* Espaço entre os botões */
+  justify-content: center;
+}
+
+/* ====== EFEITO ZEBRADO: Pinta as linhas pares ====== */
+.tabela-produtos tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Realce ao passar o mouse sobre a linha (Hover) */
+.tabela-produtos tbody tr:hover {
+  background-color: #e9e9e9;
+}
+
+/* Estilo para o botão 'Editar' (Azul) */
+.btn-editar {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Estilo para o botão 'Excluir' (Vermelho) */
+.btn-excluir {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+/* Estilo para o botão 'Sair' (Vermelho Suave) */
+.btn-sair {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #f06e7a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
 }

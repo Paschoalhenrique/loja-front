@@ -1,29 +1,29 @@
-<div style="padding: 40px; font-family: sans-serif; max-width: 500px; margin: auto;">
-  <div style="border: 1px solid #ddd; padding: 20px; border-radius: 10px; background-color: #f9f9f9; shadow: 0 4px 8px rgba(0,0,0,0.1);">
-    <h2 style="text-align: center; color: #333;">📦 Novo Produto</h2>
-    <hr>
+<div class="container" style="padding: 20px; max-width: 500px; margin: auto;">
+  <h2>{{ idEdicao ? 'Editar Produto' : 'Novo Produto' }}</h2>
+  <hr>
 
-    <div style="margin-top: 20px;">
-      <label style="display: block; font-weight: bold;">Nome do Produto:</label>
-      <input type="text" #nome style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #ccc;">
+  <div style="margin-bottom: 15px;">
+    <label>Nome do Produto:</label>
+    <input type="text" [(ngModel)]="produto.nome" class="form-control" placeholder="Digite">
+  </div>
 
-      <label style="display: block; font-weight: bold;">Preço (R$):</label>
-      <input type="number" #preco style="width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 5px; border: 1px solid #ccc;">
+  <div style="margin-bottom: 15px;">
+    <label>Preço:</label>
+    <input type="number" [(ngModel)]="produto.preco" class="form-control" placeholder="R$ 0,00">
+  </div>
 
-      <label style="display: block; font-weight: bold;">Descrição:</label>
-      <textarea #descricao style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 5px; border: 1px solid #ccc; height: 80px;"></textarea>
+  <div style="margin-bottom: 15px;">
+    <label>Descrição:</label>
+    <textarea [(ngModel)]="produto.descricao" class="form-control" rows="3"></textarea>
+  </div>
 
-      <div style="display: flex; gap: 10px;">
-        <button (click)="salvar(nome.value, preco.value, descricao.value)"
-                style="flex: 2; padding: 12px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
-          SALVAR PRODUTO
-        </button>
+  <div style="display: flex; gap: 10px;">
+    <button (click)="submit()" class="btn btn-success">
+      {{ idEdicao ? 'Salvar Alterações' : 'Cadastrar' }}
+    </button>
 
-        <button (click)="voltar()"
-                style="flex: 1; padding: 12px; background-color: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer;">
-          Voltar
-        </button>
-      </div>
-    </div>
+    <button (click)="voltar()" class="btn btn-secondary">
+      Cancelar
+    </button>
   </div>
 </div>

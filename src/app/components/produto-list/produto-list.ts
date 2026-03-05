@@ -21,22 +21,39 @@ export class ProdutoListComponent implements OnInit {
 
   carregarProdutos(): void {
     this.service.listar().subscribe({
-      next: (res: any[]) => { this.produtos = res; },
+      next: (res: any[]) => {
+        this.produtos = res;
+        console.log('Produtos carregados:', this.produtos); // Verifique no F12 se o 'id' aparece aqui
+      },
       error: (err: any) => { console.error('Erro ao listar:', err); }
     });
   }
 
-  deletar(id: number): void {
+  irParaEditar(id: any): void {
+    console.log('Tentando editar o produto com ID:', id);
+    // Verificação robusta para IDs que venham nulos do banco
+    if (id !== undefined && id !== null) {
+      this.router.navigate(['/produtos/editar', id]);
+    } else {
+      alert('Erro: O ID do produto está indefinido no banco de dados!');
+    }
+  }
+
+  deletar(id: any): void {
+    if (id === undefined || id === null) {
+      alert('Não é possível excluir um produto sem ID válido.');
+      return;
+    }
+
     if (confirm('Deseja realmente excluir este produto?')) {
-      // Agora o excluir(id) retorna um Observable, permitindo o subscribe
       this.service.excluir(id).subscribe({
         next: () => {
           alert('Excluído com sucesso!');
-          this.carregarProdutos(); // Atualiza a lista na tela
+          this.carregarProdutos();
         },
         error: (err: any) => {
           console.error('Erro ao deletar:', err);
-          alert('Erro ao excluir produto.');
+          alert('Erro ao excluir produto. Verifique a conexão com o servidor.');
         }
       });
     }
